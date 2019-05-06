@@ -72,5 +72,9 @@
             <artifactId>cola-auth-social-wechatmp</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+        	<groupId>com.honvay</groupId>
+        	<artifactId>cola-security-provider</artifactId>
+        </dependency>
     </dependencies>
 </project>

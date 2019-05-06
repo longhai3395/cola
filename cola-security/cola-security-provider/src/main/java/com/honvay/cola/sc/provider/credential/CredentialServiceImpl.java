@@ -131,7 +131,7 @@ public class CredentialServiceImpl implements CredentialService, InitializingBea
 	 * @param notification 通知
 	 */
 	private void notify(String credential, Notification notification) {
-		Map<String, Object> params = Optional.of(notification.getParams()).orElseGet(() -> {
+		Map<String, Object> params = Optional.ofNullable(notification.getParams()).orElseGet(() -> {
 			Map<String, Object> newParams = new HashMap<>(1);
 			notification.setParams(newParams);
 			return newParams;
