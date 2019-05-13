@@ -19,9 +19,11 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
 	public static final String PHONE_NUMBER_KEY = "phoneNumber";
 	public static final String SMS_CREDENTIAL_KEY = "credential";
+	public static final String SMS_TOKEN_KEY = "token";
 	public static final String SMS_TOKEN_SESSION_KEY = "sms_credential_token";
 	private String phoneNumberParameter = PHONE_NUMBER_KEY;
 	private String credentialParameter = SMS_CREDENTIAL_KEY;
+	private String tokenParameter = SMS_TOKEN_KEY;
 	private boolean postOnly = true;
 
 	public SmsAuthenticationFilter() {
@@ -48,7 +50,7 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
 			credential = credential.trim();
 
-			String token = (String) request.getSession().getAttribute(SMS_TOKEN_SESSION_KEY);
+			String token = this.obtainToken(request);
 
 			SmsAuthenticationToken authRequest = new SmsAuthenticationToken(phoneNumber, credential, token);
 			this.setDetails(request, authRequest);
@@ -70,6 +72,13 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		return request.getParameter(this.credentialParameter);
 	}
 
+	/**
+	 * 获取token
+	 */
+	protected String obtainToken(HttpServletRequest request) {
+		return request.getParameter(this.tokenParameter);
+	}
+	
 	/**
 	 * Sets the parameter name which will be used to obtain the username from the login
 	 * request.

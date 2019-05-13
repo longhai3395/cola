@@ -1,6 +1,5 @@
 package com.honvay.cola.auth.web.sms;
 
-import com.honvay.cola.auth.web.sms.authentication.SmsAuthenticationFilter;
 import com.honvay.cola.notify.sms.api.SmsNotification;
 import com.honvay.cola.sc.api.CredentialService;
 import com.honvay.cola.sc.api.model.CredentialConfig;

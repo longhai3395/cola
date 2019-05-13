@@ -138,7 +138,9 @@ public class CredentialServiceImpl implements CredentialService, InitializingBea
 		});
 
 		params.put(properties.getCredentialPlaceholder(), credential);
-		this.notificationService.notify(notification);
+		if(null != notificationService) {
+			this.notificationService.notify(notification);
+		}
 		System.out.println(credential);
 	}
 

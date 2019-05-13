@@ -15,7 +15,7 @@ public class SecurityConfiguration implements ChannelSecurityConfigurer {
 
 	@Override
 	public void configure(WebSecurity web) {
-		web.ignoring().antMatchers("/webjars/**", "/resources/**", "/favicon.ico");
+		web.ignoring().antMatchers("/static/**", "/webjars/**", "/resources/**", "/favicon.ico");
 	}
 
 	@Override
