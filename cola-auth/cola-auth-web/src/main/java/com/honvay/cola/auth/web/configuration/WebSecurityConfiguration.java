@@ -17,7 +17,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.ForwardAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -58,7 +57,7 @@ public class WebSecurityConfiguration implements ChannelSecurityConfigurer {
 	@Bean
 	public SmsLoginConfigurer smsLoginConfigurer(SmsCredentialProperties properties) {
 
-		AuthenticationFailureHandler failureHandler = new ForwardAuthenticationFailureHandler(properties.getLoginFailureUrl());
+		AuthenticationFailureHandler failureHandler = new WebAuthenticationFailureHandler(properties.getLoginFailureUrl());
 
 		SmsLoginConfigurer<HttpSecurity> configurer = new SmsLoginConfigurer<>();
 		configurer.successHandler(this.successHandler())

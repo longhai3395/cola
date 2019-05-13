@@ -28,6 +28,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+import com.honvay.cola.auth.oauth2.provider.client.CustomJdbcClientDetailsService;
 import com.honvay.cola.auth.oauth2.provider.endpoint.DefaultColaRedirectResolver;
 
 import javax.sql.DataSource;
@@ -64,7 +65,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	@Bean
 	public JdbcClientDetailsService jdbcClientDetailsService() {
-		return new JdbcClientDetailsService(dataSource);
+		return new CustomJdbcClientDetailsService(dataSource);
 	}
 
 	@Bean
