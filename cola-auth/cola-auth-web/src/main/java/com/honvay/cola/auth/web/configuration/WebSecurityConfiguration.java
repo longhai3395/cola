@@ -81,7 +81,7 @@ public class WebSecurityConfiguration implements ChannelSecurityConfigurer {
 
 		http.authorizeRequests()
 				.antMatchers("/login", "/logout", "/error").permitAll()
-				.antMatchers("/captcha", "/session-invalid").permitAll()
+				.antMatchers("/captcha", "/credential", "/session-invalid").permitAll()
 				.and()
 				.formLogin()
 				.loginProcessingUrl("/login")

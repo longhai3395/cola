@@ -17,7 +17,7 @@ import java.io.IOException;
 @Controller
 public class CaptchaController {
 
-	@RequestMapping("/captcha")
+	@RequestMapping({"/captcha", "/credential"})
 	public void captcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String code = RandomUtils.generateString(4);
 		request.getSession().setAttribute(CaptchaAuthenticationFilter.LOGIN_CAPTCHA_SESSION_KEY, code);
