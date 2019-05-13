@@ -1,7 +1,5 @@
 package com.honvay.cola.nc.sms.exchanger;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.honvay.cola.nc.api.exchanger.NotificationExchanger;
 import com.honvay.cola.notify.sms.api.SmsNotification;
 import com.honvay.cola.notify.sms.api.sender.SmsParameter;
@@ -77,14 +75,7 @@ public class SmsNotificationExchanger implements NotificationExchanger<SmsNotifi
 		Assert.notNull(smsNotification.getSignName(), "短信签名不能为空");
 
 		parameter.setSignName(smsNotification.getSignName());
-		if (smsNotification.getParams() != null) {
-			ObjectMapper mapper = new ObjectMapper();
-			try {
-				parameter.setParams(mapper.writeValueAsString(smsNotification.getParams()));
-			} catch (JsonProcessingException e) {
-				throw new RuntimeException("格式化短信参数失败");
-			}
-		}
+		parameter.setParams(smsNotification.getParams());
 
 		SmsSendResult smsSendResult = smsSender.send(parameter);
 		return STATUS_OK.equals(smsSendResult.getCode());

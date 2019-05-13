@@ -6,6 +6,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.google.gson.Gson;
 import com.honvay.cola.notify.sms.api.sender.SmsParameter;
 import com.honvay.cola.notify.sms.api.sender.SmsSendResult;
 import com.honvay.cola.notify.sms.api.sender.SmsSender;
@@ -56,7 +57,12 @@ public class AliyunSmsSender implements SmsSender {
 		request.setTemplateCode(parameter.getTemplateCode());
 		// 可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${credential}"时,此处的值为
 		// 友情提示:如果JSON中需要带换行符,请参照标准的JSON协议对换行符的要求,比如短信内容中包含\r\n的情况在JSON中需要表示成\\r\\n,否则会导致JSON在服务端解析失败
-		request.setTemplateParam(parameter.getParams());
+		
+		 Gson gson = new Gson();
+		 
+		if (parameter.getParams() != null) {
+			request.setTemplateParam(gson.toJson(parameter.getParams()));
+		}
 		//request.setOutId("yourOutId");
 
 		// 请求失败这里会抛ClientException异常
