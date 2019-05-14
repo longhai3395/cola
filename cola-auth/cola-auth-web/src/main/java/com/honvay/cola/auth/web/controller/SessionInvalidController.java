@@ -26,7 +26,7 @@ public class SessionInvalidController {
 	public View sessionInvalidPage(HttpServletRequest request) {
 		log.info(request.getRequestURI());
 		log.info(request.getHeader("Refer"));
-		return new RedirectView("/login?session");
+		return new RedirectView("/login?session", true);
 	}
 
 	@ResponseBody
