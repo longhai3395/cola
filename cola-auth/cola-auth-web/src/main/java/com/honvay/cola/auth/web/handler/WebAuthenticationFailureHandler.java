@@ -1,13 +1,15 @@
 package com.honvay.cola.auth.web.handler;
 
-import com.honvay.cola.auth.web.WebAuthenticationConstant;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+
+import com.honvay.cola.framework.core.Constants;
 
 /**
  * @author LIQIU
@@ -22,8 +24,8 @@ public class WebAuthenticationFailureHandler extends SimpleUrlAuthenticationFail
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-		request.getSession().setAttribute(WebAuthenticationConstant.AUTHENTICATION_FAIL_MESSAGE_KEY, exception.getMessage());
-		request.getSession().setAttribute(WebAuthenticationConstant.CAPTCHA_AUTHENTICATION_REQUIRED_KEY, true);
+		request.getSession().setAttribute(Constants.AUTHENTICATION_FAIL_MESSAGE_KEY, exception.getMessage());
+		request.getSession().setAttribute(Constants.CAPTCHA_AUTHENTICATION_REQUIRED_KEY, true);
 		super.onAuthenticationFailure(request, response, exception);
 	}
 }

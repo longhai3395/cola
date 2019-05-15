@@ -24,5 +24,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+        	<groupId>com.honvay</groupId>
+        	<artifactId>cola-framework-core</artifactId>
+        </dependency>
     </dependencies>
 </project>
