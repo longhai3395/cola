@@ -1,9 +1,8 @@
 package com.honvay.cola.auth.captcha.filter;
 
-import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.web.filter.GenericFilterBean;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -11,9 +10,15 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.GenericFilterBean;
+
+import com.honvay.cola.framework.core.Constants;
 
 /**
  * @author LIQIU
@@ -21,9 +26,9 @@ import java.util.Map;
  **/
 public class CaptchaAuthenticationFilter extends GenericFilterBean {
 
-	public static final String LOGIN_CAPTCHA_SESSION_KEY = "login_captcha";
+	public static final String LOGIN_CAPTCHA_SESSION_KEY = Constants.LOGIN_CAPTCHA_SESSION_KEY;
 
-	public static final String LOGIN_CAPTCHA_PARAM_NAME = "captcha";
+	public static final String LOGIN_CAPTCHA_PARAM_NAME = Constants.LOGIN_CAPTCHA_PARAM_NAME;
 
 	private Map<RequestMatcher, AuthenticationFailureHandler> requestMatcherMap = new HashMap<>();
 
@@ -51,16 +56,22 @@ public class CaptchaAuthenticationFilter extends GenericFilterBean {
 			return;
 		}
 
-		Object captcha = request.getSession().getAttribute(LOGIN_CAPTCHA_SESSION_KEY);
-
-		if (captcha == null) {
-			chain.doFilter(request, response);
-		} else {
-			if (!String.valueOf(captcha).equalsIgnoreCase(request.getParameter(LOGIN_CAPTCHA_PARAM_NAME))) {
-				authenticationFailureHandler.onAuthenticationFailure(request, response, new InsufficientAuthenticationException("验证码错误"));
-			} else {
-				chain.doFilter(request, response);
-			}
+		HttpSession session = request.getSession();
+		Object captcha = session.getAttribute(LOGIN_CAPTCHA_SESSION_KEY);
+		
+		String inputCaptcha = request.getParameter(LOGIN_CAPTCHA_PARAM_NAME);
+		
+		if(Boolean.TRUE.equals(session.getAttribute(Constants.CAPTCHA_AUTHENTICATION_REQUIRED_KEY)) && 
+				StringUtils.isEmpty(inputCaptcha)){
+			authenticationFailureHandler.onAuthenticationFailure(request, response, new InsufficientAuthenticationException("请输入验证码"));
+			return;
 		}
+		
+		if(!StringUtils.isEmpty(inputCaptcha) && !inputCaptcha.equalsIgnoreCase(String.valueOf(captcha))) {
+			authenticationFailureHandler.onAuthenticationFailure(request, response, new InsufficientAuthenticationException("验证码错误"));
+			return;
+		}
+	
+		chain.doFilter(request, response);
 	}
 }

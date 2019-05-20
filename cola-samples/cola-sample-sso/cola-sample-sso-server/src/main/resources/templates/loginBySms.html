@@ -45,8 +45,9 @@
                         <label class="col-sm-2 control-label" for="smsVerificationCode">短信验证码</label>
                         <div class="col-sm-10">
                             <div class="input-group">
+                            	<input type="hidden" name="token" id="token">
                                 <input type="text" id="smsVerificationCode" class="form-control"
-                                       name="smsVerificationCode" placeholder="输入验证码">
+                                       name="credential" placeholder="输入验证码">
                                 <span class="input-group-btn">
                                 <button type="button" id="sendSmsBtn" class="btn btn-default">发送短信验证码</button>
                              </span>
@@ -57,7 +58,7 @@
                         <label class="col-sm-2 control-label" for="smsImageVerificationCode">验证码</label>
                         <div class="col-sm-10">
                             <div class="input-group">
-                                <input type="text" name="credential" class="form-control" placeholder="输入验证码">
+                                <input type="text" name="captcha" class="form-control" placeholder="输入验证码">
                                 <span class="input-group-btn">
                                 <img id="smsImageVerificationCode" onclick="this.src=this.src"
                                      style="height: 34px;cursor: pointer" src="/credential">
@@ -107,6 +108,7 @@
         $("#sendSmsBtn").click(function () {
             $.get("/sendSms?phoneNumber=" + $("#phoneNumber").val()).done(function (data) {
                 alert(data);
+                $("#token").val(data);
             });
         });
     </script>

@@ -157,6 +157,7 @@ CREATE TABLE `oauth_client_details` (
   `access_token_validity` int(11) DEFAULT NULL,
   `refresh_token_validity` int(11) DEFAULT NULL,
   `additional_information` varchar(255) DEFAULT NULL,
+  `archived` tinyint(1) DEFAULT '0',
   `autoapprove` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

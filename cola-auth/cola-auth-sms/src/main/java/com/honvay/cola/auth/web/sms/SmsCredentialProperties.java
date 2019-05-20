@@ -21,7 +21,7 @@ public class SmsCredentialProperties {
 
 	private String sendSmsUrl = "/sendSms";
 
-	private String smsTemlateCode;
+	private String smsTemlateCode = "loginSms";
 
 	private String smsSignName;
 
